@@ -28,6 +28,7 @@ public class GameLoop {
                         canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                         snakeView.drawSnake();
+                        GameBoard.getInstance().drawFood();
                     }
                 }
         );

@@ -9,10 +9,9 @@ public class SnakeController {
 
     public SnakeController(SnakeModel model) {
         this.model = model;
-        this.createListeners();
     }
 
-    private void createListeners() {
+    public void createListeners() {
         Scene scene = GameSystem.getInstance().getScene();
         scene.addEventHandler(KeyEvent.KEY_PRESSED, this::handleKeypress);
     }
@@ -27,6 +26,7 @@ public class SnakeController {
         KeyCode keyCode = event.getCode();
         switch (keyCode.getName()) {
             case "Enter", "Space" -> GameLoop.getInstance().togglePause();
+            case "R" -> GameSystem.getInstance().resetGame();
             default -> {
                 if (GameLoop.getInstance().isPlaying()) { // Game is not paused
                     switch (keyCode.getName()) {
@@ -39,5 +39,9 @@ public class SnakeController {
             }
         }
         System.out.print("keyCode is: " + keyCode.getCode() + "  |||  Name is: " + keyCode.getName() + "\n");
+    }
+
+    public SnakeModel getModel() {
+        return model;
     }
 }

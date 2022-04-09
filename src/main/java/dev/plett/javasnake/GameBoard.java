@@ -14,7 +14,8 @@ public class GameBoard {
     private static GameBoard instance;
 
     private final int[] windowOffset; // {x, y}: Pixels off from top-left that the game scene sits in
-    private final int[] boardSize;    // {width, height}: Size of the game board, in units
+    private final int[] boardSize; // {width, height}: Size of the game board, in units
+    private int[] foodSpot = new int[] {0, 0}; // {x, y}: Location of the current food, in units
 
     private Rectangle boardShape;
 
@@ -27,6 +28,7 @@ public class GameBoard {
         this.windowOffset = Arrays.copyOf(windowOffset, windowOffset.length); // Deep copy!
         this.boardSize = Arrays.copyOf(boardSize, boardSize.length); // Shallow copy is fine.
         this.makeBoardShape(color);
+        this.setFood();
     }
 
     private void makeBoardShape(Color color) {
@@ -51,7 +53,21 @@ public class GameBoard {
         return windowOffset;
     }
 
-    public int[] boardSize() {
+    public int[] getBoardSize() {
         return boardSize;
+    }
+
+    public void drawFood() {
+        GraphicsContext context = GameSystem.getInstance().getCanvas().getGraphicsContext2D();
+
+        int unit = GameSystem.getInstance().getUnit();
+
+        context.fillRect(this.windowOffset[0] + (this.foodSpot[0] + 0.1) * unit, this.windowOffset[1] + (this.foodSpot[1] + 0.1) * unit, unit * 0.8, unit * 0.8);
+    }
+
+    public void setFood() {
+        // to be made more sophisticated once the snake has length
+        this.foodSpot[0] = (int) (Math.random() * this.boardSize[0]);
+        this.foodSpot[1] = (int) (Math.random() * this.boardSize[1]);
     }
 }

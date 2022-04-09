@@ -52,14 +52,15 @@ public class GameApplication extends Application {
 
         Scene scene = new Scene(root, size[0], size[1]); // canvasScene!
 
-        new GameSystem(canvas, scene, 4, unit);
-        new GameBoard(boardOffset, boardSize, snakeColor);
-        //GameSystem system = GameSystem.getInstance(); // THIS << IS HOW TO GET THE GAME SYSTEM
-
         SnakeModel snakeModel = new SnakeModel();
         SnakeController snakeController = new SnakeController(snakeModel);
         SnakeView snakeView = new SnakeView(snakeModel);
 
+        new GameSystem(canvas, scene, snakeController, 4, unit);
+        new GameBoard(boardOffset, boardSize, snakeColor);
+        //GameSystem system = GameSystem.getInstance(); // THIS << IS HOW TO GET THE GAME SYSTEM
+
+        snakeController.createListeners();
         new GameLoop(snakeController, snakeView);
 
         root.getChildren().add(GameBoard.getInstance().getBoardShape());

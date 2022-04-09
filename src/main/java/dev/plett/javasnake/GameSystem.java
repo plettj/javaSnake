@@ -9,6 +9,7 @@ public class GameSystem {
 
     private final Canvas canvas;
     private final Scene scene;
+    private final SnakeController snakeController;
     private final int foodSize;
     private final int unit;
 
@@ -16,10 +17,11 @@ public class GameSystem {
         return instance;
     }
 
-    public GameSystem(Canvas canvas, Scene scene, int foodSize, int unit) {
+    public GameSystem(Canvas canvas, Scene scene, SnakeController snakeController, int foodSize, int unit) {
         instance = this;
         this.canvas = canvas;
         this.scene = scene;
+        this.snakeController = snakeController;
         this.foodSize = foodSize;
         this.unit = unit;
     }
@@ -42,5 +44,11 @@ public class GameSystem {
 
     public int getUnit() {
         return unit;
+    }
+
+    public void resetGame() {
+        this.snakeController.getModel().resetSnake();
+        GameBoard.getInstance().setFood();
+        GameLoop.getInstance().play();
     }
 }
