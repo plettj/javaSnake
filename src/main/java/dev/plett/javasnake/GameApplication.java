@@ -12,12 +12,23 @@ package dev.plett.javasnake;
  */
 
 import javafx.application.Application;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 public class GameApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
-        GameSystem system = new GameSystem(4, new int[] {50, 50}, new int[] {10, 10}, 25);
+        Canvas canvas = new Canvas(1080, 720);
+        GraphicsContext context = canvas.getGraphicsContext2D();
+
+        GameSystem system = new GameSystem(
+                canvas,
+                4,
+                new int[] {50, 50},
+                new int[] {10, 10},
+                25
+        );
 
         // system needs to include our canvases so the view and controllers can interact with them
 
