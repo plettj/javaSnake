@@ -16,12 +16,11 @@ public class SnakeView {
     public void drawSnake() {
         List<Square> body = model.getBody();
 
-        Canvas canvas = GameSystem.getInstance().getCanvas();
-        GraphicsContext context = canvas.getGraphicsContext2D();
-        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        GraphicsContext context = GameSystem.getInstance().getCanvas().getGraphicsContext2D();
 
         int unit = GameSystem.getInstance().getUnit();
-        int[] offset = GameSystem.getInstance().getWindowOffset();
+        int[] offset = GameBoard.getInstance().getWindowOffset();
+
         for (Square point: body) {
             context.fillRect(offset[0] + model.getBody().get(0).get()[0] * unit, offset[1] + model.getBody().get(0).get()[1] * unit, unit, unit);
         }

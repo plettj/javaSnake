@@ -2,6 +2,8 @@ package dev.plett.javasnake;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 
 public class GameLoop {
@@ -21,6 +23,10 @@ public class GameLoop {
                 actionEvent -> {
                     if (GameLoop.getInstance().isPlaying()) {
                         snakeController.newFrame();
+
+                        Canvas canvas = GameSystem.getInstance().getCanvas();
+                        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
                         snakeView.drawSnake();
                     }
                 }

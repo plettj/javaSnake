@@ -10,21 +10,17 @@ public class GameSystem {
     private final Canvas canvas;
     private final Scene scene;
     private final int foodSize;
-    private final int[] windowOffset; // {x, y}: Pixels off from top-left that the game scene sits in
-    private final int[] boardSize;    // {width, height}: Size of the game board, in units
     private final int unit;
 
     public static GameSystem getInstance() {
         return instance;
     }
 
-    public GameSystem(Canvas canvas, Scene scene, int foodSize, int[] windowOffset, int[] boardSize, int unit) {
+    public GameSystem(Canvas canvas, Scene scene, int foodSize, int unit) {
         instance = this;
         this.canvas = canvas;
         this.scene = scene;
         this.foodSize = foodSize;
-        this.windowOffset = windowOffset; // Shallow copy is fine.
-        this.boardSize = boardSize; // Shallow copy is fine.
         this.unit = unit;
     }
 
@@ -42,14 +38,6 @@ public class GameSystem {
 
     public int getFoodSize() {
         return foodSize;
-    }
-
-    public int[] getWindowOffset() {
-        return windowOffset;
-    }
-
-    public int[] boardSize() {
-        return boardSize;
     }
 
     public int getUnit() {

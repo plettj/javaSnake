@@ -24,16 +24,20 @@ public class SnakeController {
     }
 
     private void handleKeypress(KeyEvent event) {
-        if (GameLoop.getInstance().isPlaying()) { // Game is not paused
-            KeyCode keyCode = event.getCode();
-            switch (keyCode.getName()) {
-                case "Left", "A" -> model.setDirection(Direction.LEFT);
-                case "Up", "W" -> model.setDirection(Direction.UP);
-                case "Right", "D" -> model.setDirection(Direction.RIGHT);
-                case "Down", "S" -> model.setDirection(Direction.DOWN);
-                case "Enter", "Space" -> GameLoop.getInstance().togglePause();
+        KeyCode keyCode = event.getCode();
+        switch (keyCode.getName()) {
+            case "Enter", "Space" -> GameLoop.getInstance().togglePause();
+            default -> {
+                if (GameLoop.getInstance().isPlaying()) { // Game is not paused
+                    switch (keyCode.getName()) {
+                        case "Left", "A" -> model.setDirection(Direction.LEFT);
+                        case "Up", "W" -> model.setDirection(Direction.UP);
+                        case "Right", "D" -> model.setDirection(Direction.RIGHT);
+                        case "Down", "S" -> model.setDirection(Direction.DOWN);
+                    }
+                }
             }
-            System.out.print("keyCode is: " + keyCode.getCode() + "  |||  Name is: " + keyCode.getName() + "\n");
         }
+        System.out.print("keyCode is: " + keyCode.getCode() + "  |||  Name is: " + keyCode.getName() + "\n");
     }
 }
