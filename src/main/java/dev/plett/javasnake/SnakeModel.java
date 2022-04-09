@@ -10,10 +10,8 @@ public class SnakeModel {
     private final ObjectProperty<List<Square>> body = new SimpleObjectProperty<>();
     private final ObjectProperty<Direction> direction = new SimpleObjectProperty<>();
     private int length;
-    private GameSystem system;
 
-    public SnakeModel(GameSystem system) {
-        this.system = system; // The system holds all the constants and such
+    public SnakeModel() {
         length = 1;
         body.set(new ArrayList<>());
         body.get().add(new Square(0, 0));
@@ -47,7 +45,7 @@ public class SnakeModel {
     }
 
     public void eatFood() {
-        length += system.getFoodSize();
+        length += GameSystem.getInstance().getFoodSize();
     }
 
     public void update() {

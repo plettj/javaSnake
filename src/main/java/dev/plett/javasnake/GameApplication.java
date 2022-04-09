@@ -12,22 +12,49 @@ package dev.plett.javasnake;
  */
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class GameApplication extends Application {
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
+        Pane root = new Pane();
+
+        StackPane holder = new StackPane();
         Canvas canvas = new Canvas(1080, 720);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        GameSystem system = new GameSystem(canvas, 4, new int[] {50, 50}, new int[] {10, 10}, 25);
+        holder.getChildren().add(canvas);
+        root.getChildren().add(holder);
 
-        // system needs to include our canvases so the view and controllers can interact with them
+        holder.setStyle("-fx-background-color: #000000"); // Background colour
+        context.setFill(Color.valueOf("#FFFFFF")); // Snake colour
 
-        SnakeModel snakeModel = new SnakeModel(system);
-        SnakeController snakeController = new SnakeController(snakeModel, system);
-        SnakeView snakeView = new SnakeView(snakeModel, system);
+        Scene scene = new Scene(root, 1080, 720); // canvasScene!
+
+        new GameSystem(canvas, scene, 4, new int[] {0, 0}, new int[] {12, 12}, 25);
+        //GameSystem system = GameSystem.getInstance(); // THIS << IS HOW TO GET THE GAME SYSTEM
+
+        SnakeModel snakeModel = new SnakeModel();
+        SnakeController snakeController = new SnakeController(snakeModel);
+        SnakeView snakeView = new SnakeView(snakeModel);
+
+        new GameLoop(snakeController, snakeView);
+
+        stage.setScene(scene);
+        stage.show();
+
+        // Start the game!
+        GameLoop.getInstance().play();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
