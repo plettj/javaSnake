@@ -17,9 +17,9 @@ public class SnakeModel {
     }
 
     public void resetSnake() {
-        length = 1;
+        length = 4;
         body.set(new ArrayList<>());
-        body.get().add(new Square(3, 3));
+        body.get().add(new Square(0, 3));
         direction.set(Direction.RIGHT);
     }
 
@@ -37,10 +37,18 @@ public class SnakeModel {
      * @param add     Whether to increase the length of our snake by 1.
      */
     public void moveBody(int x, int y, boolean add) {
-
-        // Not implemented properly yet! Right now it just changes the head's location.
-
-        body.get().get(0).set(x, y);
+        if (add) {
+            body.get().add(0, new Square(x, y));
+        } else {
+            int[] previousSquare = new int[]{x, y};
+            int[] currentSquare;
+            for (Square square : body.get()) {
+                currentSquare = square.get();
+                square.set(previousSquare[0], previousSquare[1]);
+                previousSquare[0] = currentSquare[0];
+                previousSquare[1] = currentSquare[1];
+            }
+        }
     }
 
     public Direction getDirection() {
@@ -48,19 +56,13 @@ public class SnakeModel {
     }
 
     public void setDirection(Direction direction) {
-        // This needs to get complicated in order to create the illusion of controller forgiveness
-        // Adds to the first direction slot; then the second; otherwise, replaces the second.
-        // Don't do any of these things if the move is not legal (eg. trying to go DOWN from UP).
-
         if (keyPresses[0].equals(Direction.NO_DIRECTION)) {
-            // Now we check if this is even a legal move
             if (this.direction.getValue().ordinal() % 2 != direction.ordinal()) {
-                keyPresses[0] = direction;
+                keyPresses[0] = direction; // This was a legal move!
             }
         } else {
-            // Now we check if this is even a legal move COMPARED TO keyPresses[0]
             if (keyPresses[0].ordinal() % 2 != direction.ordinal()) {
-                keyPresses[1] = direction;
+                keyPresses[1] = direction; // This was a legal move!
             }
         }
     }
@@ -78,9 +80,27 @@ public class SnakeModel {
         }
 
         // Magic numbers time! This shifts our values by the correct amount based on our X and Y
-        int newX = getBody().get(0).get()[0] + (direction.get().ordinal() - 1) % 2;
-        int newY = getBody().get(0).get()[1] + (direction.get().ordinal() - 2) % 2;
-        boolean add = length > getBody().size();
+        int newX = body.get().get(0).get()[0] + (direction.get().ordinal() - 1) % 2;
+        int newY = body.get().get(0).get()[1] + (direction.get().ordinal() - 2) % 2;
+        boolean add = length > body.get().size();
+
+        // Perhaps eat some food, or collide with things
+        if (newX < 0 || newX >= GameBoard.getInstance().getBoardSize()[0] || newY < 0 || newY >= GameBoard.getInstance().getBoardSize()[1]) {
+            GameSystem.getInstance().resetGame();
+            return;
+        }
+        for (int i = 0; i < this.body.get().size(); i++) {
+            Square square = this.body.get().get(i);
+            if (i < this.body.get().size() - 1 || add) { // So we don't consider colliding with tail that's about to go away
+                if (newX == square.getX() && newY == square.getY()) {
+                    GameSystem.getInstance().resetGame();
+                    return;
+                }
+            }
+        }
+        if (GameBoard.getInstance().tryFood(newX, newY)) {
+            eatFood(); // Grow, because we successfully ate a piece of food!
+        }
 
         this.moveBody(newX, newY, add);
     }

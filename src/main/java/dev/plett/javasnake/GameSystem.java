@@ -34,8 +34,8 @@ public class GameSystem {
         return scene;
     }
 
-    public GraphicsContext getGraphicsContext() {
-        return canvas.getGraphicsContext2D();
+    public SnakeController getSnakeController() {
+        return snakeController;
     }
 
     public int getFoodSize() {

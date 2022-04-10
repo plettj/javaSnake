@@ -21,8 +21,22 @@ public class SnakeView {
         int unit = GameSystem.getInstance().getUnit();
         int[] offset = GameBoard.getInstance().getWindowOffset();
 
-        for (Square point: body) {
-            context.fillRect(offset[0] + model.getBody().get(0).get()[0] * unit, offset[1] + model.getBody().get(0).get()[1] * unit, unit, unit);
+        for (int i = 0; i < body.size(); i++) {
+            Square square = body.get(i);
+            if (i < body.size() - 1) {
+                Square nextSquare = body.get(i + 1);
+                // Magic number stuff again! This is to draw our rectangles correctly
+                double xExtra = (nextSquare.getX() - square.getX()) * 0.155;
+                double yExtra = (nextSquare.getY() - square.getY()) * 0.155;
+                context.fillRect(
+                        offset[0] + (square.getX() + 0.15 + xExtra - Math.abs(xExtra)) * unit,
+                        offset[1] + (square.getY() + 0.15 + yExtra - Math.abs(yExtra)) * unit,
+                        unit * (0.7 + Math.abs(xExtra) * 2),
+                        unit * (0.7 + Math.abs(yExtra) * 2)
+                );
+            } else {
+                context.fillRect(offset[0] + (square.getX() + 0.15) * unit, offset[1] + (square.getY() + 0.15) * unit, unit * 0.7, unit * 0.7);
+            }
         }
     }
 }

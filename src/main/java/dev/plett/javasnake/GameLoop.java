@@ -19,7 +19,7 @@ public class GameLoop {
         instance = this;
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(
-                Duration.millis(100),
+                Duration.millis(120),
                 actionEvent -> {
                     if (GameLoop.getInstance().isPlaying()) {
                         snakeController.newFrame();

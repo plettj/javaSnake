@@ -66,8 +66,37 @@ public class GameBoard {
     }
 
     public void setFood() {
-        // to be made more sophisticated once the snake has length
-        this.foodSpot[0] = (int) (Math.random() * this.boardSize[0]);
-        this.foodSpot[1] = (int) (Math.random() * this.boardSize[1]);
+        SnakeModel model = GameSystem.getInstance().getSnakeController().getModel(); // This is rather convoluted. Is that ok?!
+
+        // Do not allow food to spawn on our snake!
+        if (model.getBody().size() < boardSize[0] * boardSize[1]) {
+            boolean unsafeFoodSpot = true;
+            while (unsafeFoodSpot) {
+                this.foodSpot[0] = (int) (Math.random() * this.boardSize[0]);
+                this.foodSpot[1] = (int) (Math.random() * this.boardSize[1]);
+                unsafeFoodSpot = false;
+                for (Square square: model.getBody()) {
+                    if (this.foodSpot[0] == square.getX() && this.foodSpot[1] == square.getY()) {
+                        unsafeFoodSpot = true;
+                        break;
+                    }
+                }
+            }
+        } else {
+            System.out.println("YOU BEAT SNAKE! CONGRATULATIONS!");
+            GameSystem.getInstance().resetGame();
+        }
+    }
+
+    /**
+     * @return true if snake is eating the food
+     */
+    public boolean tryFood(int x, int y) {
+        if (foodSpot[0] == x && foodSpot[1] == y) {
+            setFood();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

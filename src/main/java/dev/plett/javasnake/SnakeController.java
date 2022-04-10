@@ -38,7 +38,7 @@ public class SnakeController {
                 }
             }
         }
-        System.out.print("keyCode is: " + keyCode.getCode() + "  |||  Name is: " + keyCode.getName() + "\n");
+        //System.out.print("keyCode is: " + keyCode.getCode() + "  |||  Name is: " + keyCode.getName() + "\n");
     }
 
     public SnakeModel getModel() {
