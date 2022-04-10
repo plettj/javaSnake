@@ -26,7 +26,7 @@ public class GameApplication extends Application {
     public void start(Stage stage) {
         /* Initializing values of our game world */
         int[] size = new int[] {1080, 720}; // {width, height} of the full window, in pixels
-        int[] boardSize = new int[] {30, 14}; // {width, height} of the board, in units
+        int[] boardSize = new int[] {24, 14}; // {width, height} of the board, in units
         //Color backgroundColor = Color.valueOf("#000000"); // Wasn't able to get the syntax to work when doing holder.setStyle();
         Color snakeColor = Color.valueOf("#FFFFFF");
 

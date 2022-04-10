@@ -55,6 +55,10 @@ public class SnakeModel {
         return direction.get();
     }
 
+    public int getLength() {
+        return length;
+    }
+
     public void setDirection(Direction direction) {
         if (keyPresses[0].equals(Direction.NO_DIRECTION)) {
             if (this.direction.getValue().ordinal() % 2 != direction.ordinal()) {

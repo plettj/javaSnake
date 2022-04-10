@@ -47,6 +47,7 @@ public class GameSystem {
     }
 
     public void resetGame() {
+        System.out.println("You died at length: " + this.snakeController.getModel().getLength());
         this.snakeController.getModel().resetSnake();
         GameBoard.getInstance().setFood();
         GameLoop.getInstance().play();

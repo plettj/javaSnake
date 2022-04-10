@@ -62,7 +62,7 @@ public class GameBoard {
 
         int unit = GameSystem.getInstance().getUnit();
 
-        context.fillRect(this.windowOffset[0] + (this.foodSpot[0] + 0.1) * unit, this.windowOffset[1] + (this.foodSpot[1] + 0.1) * unit, unit * 0.8, unit * 0.8);
+        context.fillRect(this.windowOffset[0] + this.foodSpot[0] * unit, this.windowOffset[1] + this.foodSpot[1] * unit, unit, unit);
     }
 
     public void setFood() {
