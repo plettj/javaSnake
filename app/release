@@ -1,0 +1,2 @@
+JAVA_VERSION="15.0.2"
+MODULES="java.base java.datatransfer java.xml java.prefs java.desktop javafx.base jdk.unsupported javafx.graphics javafx.controls com.dlsc.formsfx java.scripting javafx.fxml java.logging org.controlsfx.controls dev.plett.javasnake"
